@@ -8,3 +8,8 @@ export const Roboto = localFont({
   src: "../../fonts/Roboto-Regular.ttf",
   display: "swap",
 });
+
+export const Lobster = localFont({
+  src: "../../fonts/LobsterTwo-Regular.ttf",
+  display: "swap",
+});
