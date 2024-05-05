@@ -13,3 +13,7 @@ export const Lobster = localFont({
   src: "../../fonts/LobsterTwo-Regular.ttf",
   display: "swap",
 });
+export const Rubik = localFont({
+  src: "../../fonts/Rubik-Regular.ttf",
+  display: "swap",
+});
