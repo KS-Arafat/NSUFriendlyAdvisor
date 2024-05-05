@@ -215,7 +215,7 @@ export default function Home() {
                 " -translate-y-10 opacity-0 transition-all group-hover:translate-y-2 group-hover:opacity-100 group-hover:delay-200 peer-hover:text-sky-500"
               }
             >
-              Facebook
+              Telegram
             </p>
           </Link>
         </div>
