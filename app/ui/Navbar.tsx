@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import icon from "@/public/logo.png";
 import { DancingScript } from "@/app/ui/fonts";
+import svg_cash from "@/_imgs/cash.svg";
+import svg_about from "@/_imgs/about.svg";
 
 const Navbar = () => (
   <div className="absolute flex h-20 w-full justify-center">
@@ -30,11 +32,29 @@ const Navbar = () => (
           </p>
         </div>
 
-        <Link href="/price" className="mt-3 text-lg uppercase text-white">
-          Pricing
+        <Link href="/price" className="group mt-3 text-lg uppercase text-white">
+          <span className="absolute text-[#a7ffeb] transition-all delay-100 ease-in-out group-hover:-translate-x-20 group-hover:opacity-0">
+            Pricing
+          </span>
+          <Image
+            className="-translate-y-2 translate-x-20 opacity-0 transition-all delay-100 ease-in-out group-hover:translate-x-0 group-hover:opacity-100"
+            src={svg_cash}
+            width={40}
+            height={40}
+            alt=""
+          />
         </Link>
-        <Link href="/about" className="mt-3 text-lg uppercase text-white">
-          about Us
+        <Link href="/about" className="group mt-3 text-lg uppercase text-white">
+          <span className="absolute text-[#f2d4cf] transition-all delay-100 ease-in group-hover:-translate-x-20 group-hover:opacity-0">
+            About Us
+          </span>
+          <Image
+            className="-translate-y-2 translate-x-20 opacity-0 transition-all delay-100 ease-in group-hover:translate-x-0 group-hover:opacity-100"
+            src={svg_about}
+            width={40}
+            height={40}
+            alt=""
+          />
         </Link>
       </div>
 
@@ -47,7 +67,7 @@ const Navbar = () => (
           <div className="h-20 w-full translate-y-2 rounded-md bg-sky-200 opacity-50 transition-all duration-500 ease-in-out group-hover:-translate-y-16" />
         </Link>
         <Link
-          href={"/signUp"}
+          href={"/signup"}
           className="group col-start-2 h-10 w-full overflow-hidden border-lime-300 pt-2 text-center text-xl text-white transition-all duration-500 hover:border-b hover:text-lime-400"
         >
           Sign Up
