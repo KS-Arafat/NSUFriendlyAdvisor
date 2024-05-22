@@ -1,7 +1,9 @@
+import ServerAction_SignUp from "@/server/Action_signup";
 import { DancingScript, Lobster, Rubik } from "../ui/fonts";
-import svg_bg from "@/_imgs/bg_image2.svg";
+import Script from "next/script";
+import Link from "next/link";
 
-const Signin = () => {
+const Signup = () => {
   return (
     <div
       className={
@@ -10,7 +12,7 @@ const Signin = () => {
     >
       <form
         className="group/heading grid w-8/12 grid-cols-2 place-items-start gap-3 rounded-lg bg-[#758397] p-10 leading-8 shadow-md shadow-gray-200 transition hover:shadow-2xl hover:shadow-gray-300 xl:h-[70dvh] xl:w-6/12 "
-        action=""
+        action={ServerAction_SignUp}
       >
         <p
           className={
@@ -47,6 +49,7 @@ const Signin = () => {
               type="email"
               name="u_email"
               id="email"
+              required
             />
           </div>
           <label
@@ -64,6 +67,7 @@ const Signin = () => {
               type="password"
               name="u_pwd"
               id="u_pwd"
+              required
             />
           </div>
           <label
@@ -81,6 +85,7 @@ const Signin = () => {
               type="password"
               name="u_rpwd"
               id="u_rpwd"
+              required
             />
           </div>
         </div>
@@ -108,6 +113,8 @@ const Signin = () => {
               type="text"
               name="rds_id"
               id="rds_id"
+              pattern="\d{7}"
+              required
             />
           </div>
           <label
@@ -125,24 +132,32 @@ const Signin = () => {
               type="password"
               name="rds_pwd"
               id="rds_pwd"
+              required
             />
           </div>
         </div>
 
         <div className="col-span-2 mt-4 w-full rounded-lg p-3 text-center text-xl">
           <button
+            id="submit_btn"
             className={
               Rubik.className +
-              " w-1/2 rounded-lg bg-gradient-to-br from-blue-400 via-sky-300 to-indigo-200 p-4 tracking-widest text-slate-500 shadow-sm shadow-cyan-400 transition  hover:scale-[1.1] hover:bg-gradient-to-tr hover:text-slate-800 hover:shadow-xl hover:shadow-cyan-300"
+              " w-1/2 rounded-lg bg-gradient-to-br from-blue-400 via-sky-300 to-indigo-200 p-4 tracking-widest text-slate-500 shadow-sm shadow-cyan-400 transition hover:scale-[1.05] hover:bg-gradient-to-tr hover:text-slate-800 hover:shadow-lg hover:shadow-cyan-300"
             }
             type="submit"
           >
             Sign Up
           </button>
         </div>
+        <span className="col-span-2 w-full text-center text-sm text-blue-400 transition hover:text-blue-300">
+          <Link href={"/signin"}>Already have an Account?</Link>
+        </span>
       </form>
+      <Script strategy="lazyOnload">{`
+     document.getElementById("submit_btn").addEventListener("click",function(){document.getElementById("rds_id").addEventListener("input",function(e){const t=e.target.value.replace(/[^0-9]/g,"");this.value=t});const pwd=document.getElementById("u_pwd").value,pwd2=document.getElementById("u_rpwd").value;if(document.getElementById("u_pwd").value!=document.getElementById("u_rpwd").value){alert("Password doesn't match!");document.getElementById("u_pwd").value="";document.getElementById("u_rpwd").value=""}});
+      `}</Script>
     </div>
   );
 };
 
-export default Signin;
+export default Signup;

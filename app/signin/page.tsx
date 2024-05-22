@@ -2,6 +2,7 @@ import Link from "next/link";
 import ico from "@/app/favicon.ico";
 import Image from "next/image";
 import { DancingScript, Roboto, Rubik } from "../ui/fonts";
+import ServerAction_Signin from "@/server/Action_signin";
 
 const Signin = () => {
   return (
@@ -29,7 +30,7 @@ const Signin = () => {
         </Link>
 
         <div className="mt-10 flex flex-col sm:mx-auto sm:w-full sm:max-w-sm ">
-          <form className="space-y-6 ">
+          <form className="space-y-6 " action={ServerAction_Signin}>
             <div className="relative h-11 w-full min-w-[200px]">
               <input
                 className={
