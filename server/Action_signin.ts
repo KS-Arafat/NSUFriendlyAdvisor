@@ -2,7 +2,6 @@
 import jwt from "jsonwebtoken";
 
 import { prisma_client } from "@/utils/prisma_client";
-import { count, log } from "console";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -36,7 +35,6 @@ const ServerAction_Signin = async (data: FormData) => {
 
   cookieStore.set("jwt", token);
 
-  log({ server: token }, { rds_id: dbres.rds_id });
   return redirect("/playground");
 };
 
