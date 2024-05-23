@@ -11,11 +11,11 @@ export default function RootLayout({
     const token = cookieStore.get("jwt")?.value;
     let data;
     if (token) data = jwt.verify(token, process.env.SECRET_KEY || "Not");
-    else redirect("/");
+    // else redirect("/");
+    console.log(data);
   } catch (error) {
-    redirect("/");
+    // redirect("/");
   }
-
   return (
     <html lang="en">
       <body className={""}>{children}</body>
