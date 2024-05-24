@@ -35,26 +35,24 @@ Our project is to make advising easier with the help of web automation, OCR and 
 
 `git clone` or Download the zip file.
 
-Then check if `pnpm` is installed by running
+Then check if `bun` is installed by running
 
 ```shell
-pnpm -v
-# should show pnpm version 
-# if not, run 
-npm install pnpm
+bun -v
+# should show bun version
 ```
 
 After that, install the node package with
 
 ```shell
-pnpm i
+bun i
 ```
 
 After node module are downloaded, build and start the project with
 
 ```shell
-pnpm build
-pnpm start
+bun build
+bun start
 ```
 
 Then navigate to this [URL](`http://localhost:3000/`) and enjoy.
