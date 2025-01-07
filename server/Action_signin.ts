@@ -5,12 +5,12 @@ import { prisma_client } from "@/utils/prisma_client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const ServerAction_Signin = async (data: FormData) => {
+const ServerAction_Signin = async (data: FormData): Promise<void> => {
   const uData = {
     email: data.get("email")?.toString() || "",
     password: data.get("password")?.toString() || "",
   };
-  if (uData.email.length == 0 || uData.password.length == 0) return null;
+  if (uData.email.length == 0 || uData.password.length == 0) return;
 
   const dbres = await prisma_client.user.findFirst({
     where: {
@@ -19,7 +19,7 @@ const ServerAction_Signin = async (data: FormData) => {
     select: { rds_id: true, rds_pwd: true, CourseCount: true, priority: true },
   });
 
-  if (!dbres) return null;
+  if (!dbres) return;
 
   const cookieStore = await cookies();
   const token = jwt.sign(
@@ -35,7 +35,7 @@ const ServerAction_Signin = async (data: FormData) => {
 
   cookieStore.set("jwt", token);
 
-  return redirect("/playground");
+  redirect("/playground");
 };
 
 export default ServerAction_Signin;

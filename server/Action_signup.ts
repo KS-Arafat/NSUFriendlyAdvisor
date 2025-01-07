@@ -47,7 +47,7 @@ const ServerAction_SignUp = async (data: FormData) => {
         priority: "3",
       },
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       return null;
     });
 

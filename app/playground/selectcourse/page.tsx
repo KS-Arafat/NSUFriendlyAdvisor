@@ -1,15 +1,15 @@
 import Breadcrumb from "@/app/ui/breadcrumb";
 import { DancingScript, Rubik } from "@/app/ui/fonts";
-import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CourseField from "./CourseField";
 
-const SelectCourse = () => {
-  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
+const SelectCourse = async () => {
+  const cookieStore = await cookies();
 
   const uname = atob(cookieStore.get("username")?.value || "");
   return (
-    (<div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center ">
       <Breadcrumb
         className="absolute mt-5 -translate-x-52 shadow-md shadow-gray-700"
         breads={[{ href: "/playground/selectcourse", label: "Selection" }]}
@@ -22,6 +22,7 @@ const SelectCourse = () => {
           cookieStore.delete("jwt");
           cookieStore.delete("PHPSESSID");
           cookieStore.delete("csrf_cookie_name");
+          cookieStore.delete("username");
           redirect("/");
         }}
       >
@@ -55,7 +56,7 @@ const SelectCourse = () => {
         </div>
         <form
           className="flex w-full flex-col items-center"
-          action={async (data: FormData) => {
+          action={async (data: FormData): Promise<void> => {
             "use server";
             const cookieStore = await cookies();
             let courses: Array<string> = [];
@@ -66,7 +67,7 @@ const SelectCourse = () => {
               if (len == 0) return false;
               else return true;
             });
-            if (courses.length == 0) return null;
+            if (courses.length == 0) return;
             redirect("/playground/watch?courses=" + btoa(courses.toString()));
           }}
         >
@@ -79,7 +80,7 @@ const SelectCourse = () => {
           </button>
         </form>
       </div>
-    </div>)
+    </div>
   );
 };
 

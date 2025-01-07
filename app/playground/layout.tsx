@@ -1,13 +1,12 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
-export default async function RootLayout(
-  {
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>
-) {
+import { Roboto } from "../ui/fonts";
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("jwt")?.value;
@@ -20,7 +19,7 @@ export default async function RootLayout(
   }
   return (
     <html lang="en">
-      <body className={""}>{children}</body>
+      <body className={Roboto.className + " bg-stone-700"}>{children}</body>
     </html>
   );
 }
