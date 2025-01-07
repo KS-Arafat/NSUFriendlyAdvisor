@@ -11,7 +11,7 @@ type Type_User = {
   rds_pwd: string | "";
 };
 
-const ServerAction_SignUp = async (data: FormData) => {
+const ServerAction_SignUp = async (data: FormData): Promise<void> => {
   const u_rpwd = data.get("u_rpwd")?.toString() || "";
   const udata: Type_User = {
     u_email: data.get("u_email")?.toString() || "",
@@ -28,7 +28,7 @@ const ServerAction_SignUp = async (data: FormData) => {
     u_rpwd == "" ||
     udata.u_pwd != u_rpwd
   )
-    return null;
+    return;
 
   const duplicate = await prisma_client.user.count({
     where: {
@@ -37,7 +37,7 @@ const ServerAction_SignUp = async (data: FormData) => {
   });
   if (duplicate > 0) {
     error("Duplicate Found!!");
-    return null;
+    return;
   }
   await prisma_client.user
     .create({

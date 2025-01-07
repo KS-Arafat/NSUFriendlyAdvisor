@@ -4,37 +4,23 @@ import Script from "next/script";
 import Breadcrumb from "../ui/breadcrumb";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import Logout from "@/app/ui/Logout";
 
 const Playground = () => {
   return (
     <div className="flex h-screen flex-col items-center ">
-      <Breadcrumb
-        className="absolute mt-5 -translate-x-56 shadow-md shadow-gray-700"
-        breads={
-          [
-            // { href: "/playground/selectcourse", label: "Selection" },
-            // { href: "/playground/selectcourse", label: "Selection" },
-          ]
-        }
-      />
-      <form
-        className=""
-        action={async () => {
-          "use server";
-          const cookieStore = await cookies();
-          cookieStore.delete("jwt");
-          cookieStore.delete("PHPSESSID");
-          cookieStore.delete("csrf_cookie_name");
-          redirect("/");
-        }}
-      >
-        <button
-          className="absolute mt-5 translate-x-48 rounded-xl bg-rose-600 p-3 px-5 text-white shadow-md shadow-gray-700 transition hover:bg-rose-400 hover:text-rose-700"
-          type="submit"
-        >
-          Log Out
-        </button>
-      </form>
+      <div className="container flex flex-row items-center justify-around">
+        <Breadcrumb
+          className="mt-5 shadow-md shadow-gray-700"
+          breads={
+            [
+              // { href: "/playground/selectcourse", label: "Selection" },
+              // { href: "/playground/selectcourse", label: "Selection" },
+            ]
+          }
+        />
+        <Logout />
+      </div>
       <form
         className="mt-24 flex w-fit flex-col items-center rounded-lg bg-gray-500 p-10 shadow-xl"
         action={RDS_UserAuth}

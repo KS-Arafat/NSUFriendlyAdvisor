@@ -3,6 +3,7 @@ import { DancingScript, Rubik } from "@/app/ui/fonts";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CourseField from "./CourseField";
+import Logout from "@/app/ui/Logout";
 
 const SelectCourse = async () => {
   const cookieStore = await cookies();
@@ -10,29 +11,13 @@ const SelectCourse = async () => {
   const uname = atob(cookieStore.get("username")?.value || "");
   return (
     <div className="flex flex-col items-center ">
-      <Breadcrumb
-        className="absolute mt-5 -translate-x-52 shadow-md shadow-gray-700"
-        breads={[{ href: "/playground/selectcourse", label: "Selection" }]}
-      />
-      <form
-        className=""
-        action={async () => {
-          "use server";
-          const cookieStore = await cookies();
-          cookieStore.delete("jwt");
-          cookieStore.delete("PHPSESSID");
-          cookieStore.delete("csrf_cookie_name");
-          cookieStore.delete("username");
-          redirect("/");
-        }}
-      >
-        <button
-          className="absolute mt-5 translate-x-52 rounded-xl bg-rose-600 p-3 px-5 text-white shadow-md shadow-gray-700 transition hover:bg-rose-400 hover:text-rose-700"
-          type="submit"
-        >
-          Log Out
-        </button>
-      </form>
+      <div className="container flex flex-row items-center justify-around">
+        <Breadcrumb
+          className="mt-5 shadow-md shadow-gray-700"
+          breads={[{ href: "/playground/selectcourse", label: "Selection" }]}
+        />
+        <Logout />
+      </div>
       <div className="mt-32 flex flex-col items-center rounded-lg bg-gray-500 p-10">
         <span
           className={
