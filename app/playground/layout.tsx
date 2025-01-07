@@ -1,13 +1,15 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout(
+  {
+    children,
+  }: Readonly<{
+    children: React.ReactNode;
+  }>
+) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get("jwt")?.value;
     let data;
     if (token) data = jwt.verify(token, process.env.SECRET_KEY || "Not");

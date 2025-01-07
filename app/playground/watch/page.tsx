@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CourseFetcher from "./CourseFetcher";
 
-const Watch = ({ searchParams }: { searchParams: { courses: string } }) => {
+const Watch = async (props: { searchParams: Promise<{ courses: string }> }) => {
+  const searchParams = await props.searchParams;
   let courseList;
   try {
     courseList = atob(searchParams.courses).split(",");

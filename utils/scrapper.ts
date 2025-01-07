@@ -1,24 +1,28 @@
 import { load } from "cheerio";
-import { readFileSync } from "fs";
+import { readFile, writeFile } from "node:fs";
+import AdvisingClass from "./courseFetcher";
+import { cookies } from "next/headers";
 
-const GetCourseSeats = (crsList: Array<string>) => {
-  const $ = load(readFileSync("./public/demo/course.html"));
-  const coursesInfo: Array<any> = [];
-  let cell, course;
-  $("table tbody tr").each((i, el) => {
-    cell = $(el).find("td");
-    course = cell.eq(0).text();
+const GetCourseSeats = async (crsList: Array<string>) => {
+  const cookieStore = await cookies();
 
-    if (crsList.includes(course.replaceAll(" ", ""))) {
-      coursesInfo.push({
-        course,
-        section: cell.eq(1).text(),
-        seat: cell.eq(2).text(),
-      });
-    }
+  const PHPSESSID = cookieStore.get("PHPSESSID");
+  const csrf_cookie_name = cookieStore.get("csrf_cookie_name");
+
+  if (PHPSESSID === undefined || csrf_cookie_name === undefined)
+    throw new Error("No session cookie found. Please log in.");
+
+  const adv = new AdvisingClass({
+    phpSessionId: PHPSESSID.value,
+    csrf_cookie_name: csrf_cookie_name.value,
+    courses: crsList,
   });
 
-  return coursesInfo;
+  const res = await adv.advisingFetch();
+  writeFile("./captcha/advising.html", res, (err) => {
+    if (err) throw err;
+  });
+  return;
 };
 
 export default GetCourseSeats;

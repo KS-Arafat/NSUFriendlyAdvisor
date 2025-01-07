@@ -1,15 +1,15 @@
 import Breadcrumb from "@/app/ui/breadcrumb";
 import { DancingScript, Rubik } from "@/app/ui/fonts";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CourseField from "./CourseField";
 
 const SelectCourse = () => {
-  const cookieStore = cookies();
+  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
 
   const uname = atob(cookieStore.get("username")?.value || "");
   return (
-    <div className="flex flex-col items-center ">
+    (<div className="flex flex-col items-center ">
       <Breadcrumb
         className="absolute mt-5 -translate-x-52 shadow-md shadow-gray-700"
         breads={[{ href: "/playground/selectcourse", label: "Selection" }]}
@@ -18,7 +18,7 @@ const SelectCourse = () => {
         className=""
         action={async () => {
           "use server";
-          const cookieStore = cookies();
+          const cookieStore = await cookies();
           cookieStore.delete("jwt");
           cookieStore.delete("PHPSESSID");
           cookieStore.delete("csrf_cookie_name");
@@ -32,7 +32,6 @@ const SelectCourse = () => {
           Log Out
         </button>
       </form>
-
       <div className="mt-32 flex flex-col items-center rounded-lg bg-gray-500 p-10">
         <span
           className={
@@ -58,7 +57,7 @@ const SelectCourse = () => {
           className="flex w-full flex-col items-center"
           action={async (data: FormData) => {
             "use server";
-            const cookieStore = cookies();
+            const cookieStore = await cookies();
             let courses: Array<string> = [];
             let len: number = 0;
             data.forEach((k) => courses.push(k.toString()));
@@ -80,7 +79,7 @@ const SelectCourse = () => {
           </button>
         </form>
       </div>
-    </div>
+    </div>)
   );
 };
 

@@ -31,7 +31,7 @@ const fetchCaptcha = () =>
 
 const RDS_UserAuth = async (formdata: FormData) => {
   let data: { rds_id: string } | any;
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   try {
     const token = cookieStore.get("jwt")?.value;
     if (token) data = jwt.verify(token, process.env.SECRET_KEY || "Not");

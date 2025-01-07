@@ -56,6 +56,7 @@ const CourseFetcher = ({ courseList }: { courseList: Array<string> }) => {
                   : clsname +
                     " from-green-400 via-lime-300 to-emerald-200 shadow-lg shadow-emerald-200"
               }
+              key={Math.random()}
             >
               <p key={Math.random()} className="text-lg font-bold">
                 {e.course}

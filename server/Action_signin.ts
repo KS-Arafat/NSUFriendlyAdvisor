@@ -21,7 +21,7 @@ const ServerAction_Signin = async (data: FormData) => {
 
   if (!dbres) return null;
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = jwt.sign(
     {
       verified: true,

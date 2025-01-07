@@ -21,7 +21,7 @@ const Playground = () => {
         className=""
         action={async () => {
           "use server";
-          const cookieStore = cookies();
+          const cookieStore = await cookies();
           cookieStore.delete("jwt");
           cookieStore.delete("PHPSESSID");
           cookieStore.delete("csrf_cookie_name");
