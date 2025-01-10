@@ -17,7 +17,8 @@ const CourseField = ({
   const [addedCourse, setAddedCourse] = useState<Array<string>>([]);
 
   const CourseAddEvent = (value: string) => {
-    if (addedCourse.length >= maxCourse) return;
+    if (value.length === 0) return;
+    // if (addedCourse.length >= maxCourse) return;
     setAddedCourse([...addedCourse, value]);
   };
   useEffect(() => {

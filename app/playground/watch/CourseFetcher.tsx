@@ -9,6 +9,7 @@ const CourseFetcher = ({ courseList }: { courseList: Array<string> }) => {
   const [courseInfo, setCourseInfo] = useState<Array<any>>([]);
   const [count, setCount] = useState(0);
   const [isIntervalOn, setIsIntervalOn] = useState(true);
+  const [isHidden, setHidden] = useState<boolean>(false);
 
   const clsname =
       "flex flex-col items-center rounded-lg border border-white bg-gradient-to-br p-4 ",
@@ -45,27 +46,55 @@ const CourseFetcher = ({ courseList }: { courseList: Array<string> }) => {
   }, [count]);
   return (
     <div className=" mb-10 flex flex-col items-center">
-      <div className="grid grid-cols-3 gap-4 ">
-        {courseInfo.map(
-          (e: { course: string; section: string; seat: string }) => (
-            <div
-              className={
-                parseInt(e.seat) == 0
-                  ? clsname +
-                    " from-rose-400 via-red-300 to-amber-300 shadow-lg shadow-red-200"
-                  : clsname +
-                    " from-green-400 via-lime-300 to-emerald-200 shadow-lg shadow-emerald-200"
+      <button
+        className="mb-5 rounded-lg border p-3 text-xl font-extrabold text-white"
+        onClick={() => setHidden(!isHidden)}
+      >
+        {isHidden ? "Show" : "Hide"}
+      </button>
+      <div className="grid grid-cols-5 gap-4 ">
+        {courseInfo &&
+          courseInfo.map(
+            (e: { course: string; section: string; seat: string }) => {
+              try {
+                const regex = /(\d+)\((\d+)\)/;
+                const match = e.seat.match(regex);
+                if (match == null) throw new Error();
+                const a = parseInt(match[0]);
+                const b = parseInt(match[2]);
+                return (
+                  <div
+                    className={
+                      a - b == 0
+                        ? clsname +
+                          ` from-rose-400 via-red-300 to-amber-300 shadow-lg shadow-red-200 ${isHidden ? "hidden" : ""}`
+                        : clsname +
+                          " from-green-400 via-lime-300 to-emerald-200 shadow-lg shadow-emerald-200"
+                    }
+                    key={Math.random()}
+                  >
+                    <p key={Math.random()} className="text-lg font-bold">
+                      {e.course}
+                    </p>
+                    <p key={Math.random()}>Seat: {b - a}</p>
+                    <p key={Math.random()}>Section: {e.section}</p>
+                  </div>
+                );
+              } catch (e) {
+                return (
+                  <div
+                    className={
+                      clsname +
+                      " from-rose-400 via-red-300 to-amber-300 shadow-lg shadow-red-200"
+                    }
+                    key={Math.random()}
+                  >
+                    Error
+                  </div>
+                );
               }
-              key={Math.random()}
-            >
-              <p key={Math.random()} className="text-lg font-bold">
-                {e.course}
-              </p>
-              <p key={Math.random()}>Seat: {e.seat}</p>
-              <p key={Math.random()}>Section: {e.section}</p>
-            </div>
-          ),
-        )}
+            },
+          )}
       </div>
       <button
         className={
