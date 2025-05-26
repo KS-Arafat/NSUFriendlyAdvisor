@@ -3,7 +3,7 @@ import { writeFile } from "node:fs";
 import AdvisingClass from "./courseFetcher";
 import { cookies } from "next/headers";
 import { readFile } from "node:fs/promises";
-type CourseDataType = { course: string; section: string; seat: string };
+type CourseDataType = { course: string; section: string; seat: string, faculty: string };
 
 const GetCourseSeats = async (crsList: Array<string>) => {
   const cookieStore = await cookies();
@@ -24,19 +24,27 @@ const GetCourseSeats = async (crsList: Array<string>) => {
   const $ = load(res);
   const CourseData: CourseDataType[] = [];
   const selector = crsList.map((v, i) => `tr[id^="clist${v}"]`).join(",");
-  console.log(selector);
+
 
   $(selector).each((index, element) => {
-    const firstTd = $(element).find("td").eq(0).text().trim().split(".");
-    const secondTd = $(element).find("td").eq(1).text().trim();
+    const $tds = $(element).find("td");
+
+    const courseCodeParts = $tds.eq(0).text().trim().split(".");
+    const seatInfo = $tds.eq(1).text().trim();
+    const onclickValue = $tds.eq(0).attr('onclick');
+    // 
+
+    const facultyInitialsMatch = onclickValue?.match(/'([^']*)'/g);
+    const facultyInitials = facultyInitialsMatch ? facultyInitialsMatch[7].replace(/'/g, '') : "---";
+
     CourseData.push({
-      course: firstTd[0],
-      seat: secondTd,
-      section: firstTd[1],
+      course: courseCodeParts[0],
+      seat: seatInfo,
+      section: courseCodeParts[1],
+      faculty: facultyInitials
     });
   });
 
-  console.log(CourseData);
   return CourseData;
 };
 

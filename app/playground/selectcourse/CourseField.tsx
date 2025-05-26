@@ -38,7 +38,7 @@ const CourseField = ({
         }
 
         const data = await response.json();
-        //console.log(data);
+        //
 
         setSuggestions(data.suggestions);
       } catch (error) {

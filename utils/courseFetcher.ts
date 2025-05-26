@@ -47,7 +47,7 @@ class AdvisingClass {
       method: "GET",
       mode: "cors",
     });
-    console.log(`Advising: ${response.statusText}`);
+
     return await response.text();
   };
 }

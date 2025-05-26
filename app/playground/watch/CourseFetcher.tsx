@@ -55,7 +55,7 @@ const CourseFetcher = ({ courseList }: { courseList: Array<string> }) => {
       <div className="grid grid-cols-5 gap-4 ">
         {courseInfo &&
           courseInfo.map(
-            (e: { course: string; section: string; seat: string }) => {
+            (e: { course: string; section: string; seat: string, faculty: string }) => {
               try {
                 const regex = /(\d+)\((\d+)\)/;
                 const match = e.seat.match(regex);
@@ -78,6 +78,7 @@ const CourseFetcher = ({ courseList }: { courseList: Array<string> }) => {
                     </p>
                     <p key={Math.random()}>Seat: {b - a}</p>
                     <p key={Math.random()}>Section: {e.section}</p>
+                    <p key={Math.random()}>{ e.faculty}</p>
                   </div>
                 );
               } catch (e) {

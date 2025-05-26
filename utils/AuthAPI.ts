@@ -51,8 +51,8 @@ class AuthClass {
   public showData: Function = () => {
     console.log(
       "////////////USERDATA//////////////\n" +
-        `u_id: ${this.u_id}\nenUID: ${this.enUID}\npwd: ${this.pwd}\ncsrf_cookie_name: ${this.csrf_cookie_name}\nphpSessionId: ${this.phpSessionId}\nCaptcha: ${this.captcha}` +
-        "\n////////////END//////////////",
+      `u_id: ${this.u_id}\nenUID: ${this.enUID}\npwd: ${this.pwd}\ncsrf_cookie_name: ${this.csrf_cookie_name}\nphpSessionId: ${this.phpSessionId}\nCaptcha: ${this.captcha}` +
+      "\n////////////END//////////////",
     );
   };
 
@@ -60,8 +60,7 @@ class AuthClass {
     `csrf_token=${this.csrf_cookie_name}&username=${this.u_id}&commit=Next`;
 
   public loginBody: Function = () =>
-    `csrf_token=${this.csrf_cookie_name}&password=${this.pwd}&captcha=${
-      this.captcha
+    `csrf_token=${this.csrf_cookie_name}&password=${this.pwd}&captcha=${this.captcha
     }&username=${this.enc(this.enUID)}&commit=Login`;
 
   public preLoginFetch: Function = async () => {
@@ -73,7 +72,7 @@ class AuthClass {
       method: "POST",
       mode: "cors",
     });
-    console.log("Prelogin: " + response.statusText);
+
     return await response.text();
   };
 
@@ -88,7 +87,7 @@ class AuthClass {
       method: "POST",
       mode: "cors",
     });
-    console.log("Login: " + response.statusText);
+
     return await response.text();
   };
 }

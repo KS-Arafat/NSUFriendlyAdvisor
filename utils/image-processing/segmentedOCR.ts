@@ -11,7 +11,7 @@ const scanCaptcha = async (imagePaths: string[]) => {
     const {
       data: { text },
     } = await worker.recognize(p);
-    // console.log(p, " :: ", text);
+    // 
     finaltxt += text;
   }
   await worker.terminate();

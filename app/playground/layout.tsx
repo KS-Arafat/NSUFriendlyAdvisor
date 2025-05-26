@@ -13,7 +13,7 @@ export default async function RootLayout({
     let data;
     if (token) data = jwt.verify(token, process.env.SECRET_KEY || "Not");
     // else redirect("/");
-    console.log(data);
+    
   } catch (error) {
     // redirect("/");
   }

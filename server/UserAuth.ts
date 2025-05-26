@@ -36,14 +36,14 @@ const RDS_UserAuth = async (formdata: FormData) => {
     const token = cookieStore.get("jwt")?.value;
     if (token) data = jwt.verify(token, process.env.SECRET_KEY || "Not");
     else redirect("/");
-    console.log(data);
+
   } catch (error) {
     redirect("/");
   }
   const user_id = data.rds_id,
     user_pwd = formdata.get("rds_pwd")?.toString();
 
-  console.log(user_id, user_pwd);
+
   if (!user_id || !user_pwd || user_id.length != 7) redirect("/playground");
   const userData = new AuthClass({
     u_id: user_id,
@@ -76,7 +76,7 @@ const RDS_UserAuth = async (formdata: FormData) => {
   try {
     while (userData.captcha?.length != 4)
       userData.captcha = await scanCaptcha(imgPATHS);
-  } catch (error) {}
+  } catch (error) { }
 
   ////////// LOGIN ///////////////////////////
   let loginPage = await userData.loginFetch();
@@ -88,7 +88,7 @@ const RDS_UserAuth = async (formdata: FormData) => {
   let userName = $(".white").text();
 
   if (userName.length == 0) redirect("/playground");
-  console.log($("#error_msg").text());
+
 
   ////////////// RDS COOKIES ///////////////////////
   const mySess = {
@@ -97,18 +97,8 @@ const RDS_UserAuth = async (formdata: FormData) => {
   };
 
   //////////////  REAL COOKIES //////////////
-  cookieStore.set("csrf_cookie_name", mySess.csrf_cookie_name, {
-    secure: true,
-    maxAge: 60 * 60 * 12, // 12 Hours
-    sameSite: true,
-    priority: "high",
-  });
-  cookieStore.set("PHPSESSID", mySess.PHPSESSID, {
-    secure: true,
-    maxAge: 60 * 60 * 12, // 12 Hours
-    sameSite: true,
-    priority: "high",
-  });
+  cookieStore.set("csrf_cookie_name", mySess.csrf_cookie_name);
+  cookieStore.set("PHPSESSID", mySess.PHPSESSID);
   cookieStore.set("username", btoa(userName));
   redirect("/playground/selectcourse");
 };

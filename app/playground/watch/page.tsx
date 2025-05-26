@@ -13,7 +13,7 @@ const Watch = async (props: { searchParams: Promise<{ courses: string }> }) => {
     redirect("/playground/selectcourse");
   }
 
-  console.log(courseList);
+  
 
   return (
     <div className="flex flex-col items-center">
